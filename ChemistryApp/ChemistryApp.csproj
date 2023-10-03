@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Chemestry.Common-Inheritance\Chemestry.Common-Inheritance.csproj" />
     <ProjectReference Include="..\Chemistry.Common\Chemistry.Common.csproj" />
   </ItemGroup>
 

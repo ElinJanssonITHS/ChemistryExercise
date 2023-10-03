@@ -1,7 +1,10 @@
 ﻿@page "/"
-@using Chemistry.Common.Classes
+@* @using Chemistry.Common.Classes
 @using Chemistry.Common.Enums;
-@using Chemistry.Common.Interfaces;
+@using Chemistry.Common.Interfaces; *@
+@using Chemestry.Common_Inheritance.Enums;
+@using Chemestry.Common_Inheritance.Records;
+@using Chemestry.Common_Inheritance.Classes;
 
 <PageTitle>Substances</PageTitle>
 
@@ -52,7 +55,7 @@
     string state = string.Empty;
 
     Chemistry chemistry = new();
-    List<ISubstance> substances = new();
+    List<Substance> substances = new();
     protected override void OnInitialized() => GetAll();
     void AddSubstance ()
     {
