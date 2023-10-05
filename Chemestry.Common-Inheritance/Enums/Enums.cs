@@ -1,5 +1,5 @@
 ﻿
-namespace Chemestry.Common_Inheritance.Enums;
+namespace Chemistry.Common_Inheritance.Enums;
 
 public enum States
 {

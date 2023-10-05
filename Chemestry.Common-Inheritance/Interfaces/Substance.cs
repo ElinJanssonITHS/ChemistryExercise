@@ -1,6 +1,6 @@
 ﻿
 
-using Chemestry.Common_Inheritance.Enums;
+using Chemistry.Common_Inheritance.Enums;
 
 namespace Chemistry.Common_Inheritance.Interfaces;
 

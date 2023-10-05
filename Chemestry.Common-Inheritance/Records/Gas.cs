@@ -1,14 +1,14 @@
 ﻿
-using Chemestry.Common_Inheritance.Enums;
+using Chemistry.Common_Inheritance.Enums;
 
 
-namespace Chemestry.Common_Inheritance.Records;
+namespace Chemistry.Common_Inheritance.Records;
 
 public record Gas : Substance
 {
     public override States State => GetState(GetType().Name);
 
-    public Gas(string substanceName, double mass) : base(substanceName, mass) { }
+    public Gas(int id, string substanceName, double mass) : base(id, substanceName, mass) { }
 
     public override string GetCompression()
         => $"{SubstanceName} ({State}): is compressible";

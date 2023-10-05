@@ -2,9 +2,9 @@
 @* @using Chemistry.Common.Classes
 @using Chemistry.Common.Enums;
 @using Chemistry.Common.Interfaces; *@
-@using Chemestry.Common_Inheritance.Enums;
-@using Chemestry.Common_Inheritance.Records;
-@using Chemestry.Common_Inheritance.Classes;
+@using Chemistry.Common_Inheritance.Enums;
+@using Chemistry.Common_Inheritance.Records;
+@using Chemistry.Common_Inheritance.Classes;
 
 <PageTitle>Substances</PageTitle>
 
@@ -35,11 +35,30 @@
         <button class="btn btn-outline-primary" @onclick="( e => GetState(States.Plasma))">Plasma</button>
         <button class="btn btn-outline-primary" @onclick="GetAll">All</button>
     </div>
-    <ul class="list-group">
+    <ul class="list-group mb-3">
         @foreach (var substance in substances)
         {
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                @substance.SubstanceName (@substance.Mass)
+                <div>
+                    <button class="btn btn-sm btn-success" @onclick="@(e => Add(substance.Id))">=</button>
+                     @substance.SubstanceName (@substance.Mass)
+                </div>
+                <span class="badge bg-secondary">@substance.State</span>
+            </li>
+        }
+    </ul>
+    <ul class="list-group mb-3">
+        @if (stateMessage != string.Empty)
+        {
+            <li class="list-group-item bg-light">@stateMessage</li>
+        }
+        @foreach (var substance in selected)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <button class="btn btn-sm btn-danger" @onclick="@(e => Remove(substance.Id))">-</button>
+                     @substance.SubstanceName (@substance.Mass)
+                </div>
                 <span class="badge bg-secondary">@substance.State</span>
             </li>
         }
@@ -53,9 +72,11 @@
     string substance = string.Empty;
     string newMass = string.Empty;
     string state = string.Empty;
+    string stateMessage = string.Empty;
 
     Chemistry chemistry = new();
     List<Substance> substances = new();
+    List<Substance> selected = new();
     protected override void OnInitialized() => GetAll();
     void AddSubstance ()
     {
@@ -82,6 +103,16 @@
     {
         error = string.Empty;
         substances = chemistry.GetSubstances(s => s.State.Equals(state));
+    }
+    void Add(int id)
+    {
+        var substance = selected.SingleOrDefault(s => s.Id.Equals(id));
+        if (substance is null) selected.Add(substances.Single(s => s.Equals(id)));
+    }
+    void Remove(int id)
+    {
+        var substance = selected.Single(s => s.Id.Equals(id));
+        selected.Remove(substance);
     }
 
 }
