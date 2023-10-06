@@ -10,16 +10,8 @@ public record Solid : Substance
 
     public Solid(int id, string substanceName, double mass) : base(id, substanceName, mass) { }
 
-    public override string GetCompression()
-        => $"{SubstanceName} ({State}): doesn’t compress easily";
-
-    public override string GetShape()
-        => $"{SubstanceName} ({State}): retains a fixed volume and shape";
-
-    public override string ParticleMovement()
-        => $"{SubstanceName} ({State}):  rigid - particles cannot move/slide past one another";
-    public sealed override string GetData()
-    {
-        return $"{SubstanceName} {Mass} This is a solid.";
-    }
+    public override string GetCompression() => $"{SubstanceName} ({State}): doesn’t compress easily";
+    public override string GetShape() => $"{SubstanceName} ({State}): retains a fixed volume and shape";
+    public override string ParticleMovement() => $"{SubstanceName} ({State}):  rigid - particles cannot move/slide past one another";
+    public sealed override string GetData() => $"{SubstanceName} {Mass} This is a solid.";
 }

@@ -18,12 +18,12 @@
         </div>
     }
     <div class="input-group mb-4">
-        <input type="text" class="form-control" placeholder="Substance" @bind="@substance" />
+        <input type="text" class="form-control" placeholder="Substance" @bind="@newName" />
         <input type="text" class="form-control" placeholder="Mass" @bind="@newMass" />
         <select class="form-select" @bind="@state">
             @foreach (var state in chemistry.StateNames)
             {
-                <option value="@state">@state</option>
+                <option value=@state>@state</option>
             }
         </select>
         <button class="btn btn-outline-primary btn-padding" @onclick="AddSubstance">Add</button>
@@ -41,7 +41,7 @@
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <div>
                     <button class="btn btn-sm btn-success" @onclick="@(e => Add(substance.Id))">=</button>
-                     @substance.SubstanceName (@substance.Mass)
+                    &nbsp;@substance.SubstanceName (@substance.Mass)
                 </div>
                 <span class="badge bg-secondary">@substance.State</span>
             </li>
@@ -57,7 +57,7 @@
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <div>
                     <button class="btn btn-sm btn-danger" @onclick="@(e => Remove(substance.Id))">-</button>
-                     @substance.SubstanceName (@substance.Mass)
+                    &nbsp;@substance.SubstanceName (@substance.Mass)
                 </div>
                 <span class="badge bg-secondary">@substance.State</span>
             </li>
@@ -69,7 +69,7 @@
 
 @code{
     string error = string.Empty;
-    string substance = string.Empty;
+    string newName = string.Empty;
     string newMass = string.Empty;
     string state = string.Empty;
     string stateMessage = string.Empty;
@@ -77,15 +77,17 @@
     Chemistry chemistry = new();
     List<Substance> substances = new();
     List<Substance> selected = new();
+
     protected override void OnInitialized() => GetAll();
+
     void AddSubstance ()
     {
         try
         {
             error = string.Empty;
             var mass = double.Parse(newMass);
-            chemistry.AddSubstance(substance, mass, state);
-            substance = string.Empty;
+            chemistry.Add(newName, mass, state);
+            newName = string.Empty;
             newMass = string.Empty;
             state = string.Empty;
         }
@@ -107,12 +109,32 @@
     void Add(int id)
     {
         var substance = selected.SingleOrDefault(s => s.Id.Equals(id));
-        if (substance is null) selected.Add(substances.Single(s => s.Equals(id)));
+        if (substance is null)
+        {
+            selected.Add(substances.Single(s => s.Id.Equals(id)));
+        }
+        //Compare();
     }
     void Remove(int id)
     {
         var substance = selected.Single(s => s.Id.Equals(id));
         selected.Remove(substance);
+        //Compare();
+    }
+    void Compare()
+    {
+        try
+        {
+
+        }
+        catch (ArgumentException ex)
+        {
+            stateMessage = ex.Message;
+        }
+        catch
+        {
+            stateMessage = "Couldn’t compare the substances";
+        }
     }
 
 }

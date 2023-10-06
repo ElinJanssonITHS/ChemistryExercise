@@ -12,10 +12,10 @@ public class Chemistry
     public States GetStateValue(string name) => (States)Enum.Parse(typeof(States), name);
     public Chemistry()
     {
-        AddSubstance(new Solid(1, "Ice", 0.9));
-        AddSubstance(new Gas(2, "Air", 0.1));
-        AddSubstance(new Plasma(3, "Lightning", 0.01));
-        AddSubstance(new Liquid(4, "Water", 1.0));
+        Add(new Solid(1, "Ice", 0.9));
+        Add(new Gas(2, "Air", 0.1));
+        Add(new Plasma(3, "Lightning", 0.01));
+        Add(new Liquid(4, "Water", 1.0));
     }
     public Substance CreateSubstance(int id, string substanceName, double mass, string state) => GetStateValue(state) switch
     {
@@ -26,17 +26,17 @@ public class Chemistry
         _ => throw new ArgumentException("State does not exist.", nameof(state))
     };
 
-    public void AddSubstance (string substanceName, double mass, string state)
+    public void Add (string substanceName, double mass, string state)
     {
         try
         {
             Substance substance = CreateSubstance(Substances.Count + 1, substanceName, mass, state);
-            AddSubstance(substance);
+            Add(substance);
         }
         catch { throw; }
 
     }
-    public void AddSubstance(Substance substance) => Substances.Add(substance);
+    public void Add(Substance substance) => Substances.Add(substance);
     public List<Substance> GetSubstances() => Substances;
     public List<Substance> GetSubstances(Func<Substance, bool> expression) => Substances.Where(expression).ToList();
 

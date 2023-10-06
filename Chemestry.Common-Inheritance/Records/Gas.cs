@@ -10,12 +10,7 @@ public record Gas : Substance
 
     public Gas(int id, string substanceName, double mass) : base(id, substanceName, mass) { }
 
-    public override string GetCompression()
-        => $"{SubstanceName} ({State}): is compressible";
-
-    public override string GetShape()
-        => $"{SubstanceName} ({State}): assumes the shape and volume of its container";
-
-    public override string ParticleMovement()
-        => $"{SubstanceName} ({State}): particles can move past one another";
+    public override string GetCompression() => $"{SubstanceName} ({State}): is compressible";
+    public override string GetShape() => $"{SubstanceName} ({State}): assumes the shape and volume of its container";
+    public override string ParticleMovement() => $"{SubstanceName} ({State}): particles can move past one another";
 }

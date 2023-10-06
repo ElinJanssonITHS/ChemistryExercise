@@ -11,12 +11,7 @@ public record Liquid : Substance
 
     public Liquid(int id, string substanceName, double mass) : base(id, substanceName, mass) { }
 
-    public override string GetCompression()
-        => $"{SubstanceName} ({State}): does not compress easily";
-
-    public override string GetShape()
-        => $"{SubstanceName} ({State}): assumes the shape of the part of the container which it occupies"; 
-
-    public override string ParticleMovement()
-        => $"{SubstanceName} ({State}): particles can move/slide past one another";
+    public override string GetCompression() => $"{SubstanceName} ({State}): does not compress easily";
+    public override string GetShape() => $"{SubstanceName} ({State}): assumes the shape of the part of the container which it occupies"; 
+    public override string ParticleMovement() => $"{SubstanceName} ({State}): particles can move/slide past one another";
 }
