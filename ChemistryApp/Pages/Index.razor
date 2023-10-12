@@ -2,6 +2,7 @@
 @* @using Chemistry.Common.Classes
 @using Chemistry.Common.Enums;
 @using Chemistry.Common.Interfaces; *@
+@using Chemestry.Common_Inheritance.Classes;
 @using Chemistry.Common_Inheritance.Enums;
 @using Chemistry.Common_Inheritance.Records;
 @using Chemistry.Common_Inheritance.Classes;
@@ -85,7 +86,7 @@
         try
         {
             error = string.Empty;
-            var mass = double.Parse(newMass);
+            var mass = int.Parse(newMass);
             chemistry.Add(newName, mass, state);
             newName = string.Empty;
             newMass = string.Empty;
@@ -99,12 +100,12 @@
     void GetAll()
     {
         error = string.Empty;
-        substances = chemistry.GetSubstances();
+        substances = chemistry.Get();
     }
     void GetState(States state)
     {
         error = string.Empty;
-        substances = chemistry.GetSubstances(s => s.State.Equals(state));
+        substances = chemistry.Get(s => s.State.Equals(state));
     }
     void Add(int id)
     {
@@ -113,19 +114,36 @@
         {
             selected.Add(substances.Single(s => s.Id.Equals(id)));
         }
-        //Compare();
+        Compare();
     }
     void Remove(int id)
     {
         var substance = selected.Single(s => s.Id.Equals(id));
         selected.Remove(substance);
-        //Compare();
+        Compare();
     }
     void Compare()
     {
         try
         {
-
+            if (selected.Count == 1)
+            {
+                throw new ArgumentException("Too few substances selected for a comparison");
+            }
+            if (selected.Count == 0)
+            {
+                throw new ArgumentException("");
+            }
+            var first = selected.First();
+            foreach (var substance in selected.Skip(1))
+            {
+                if (!first.SameState(substance))
+                {
+                    stateMessage = "Substances have different sates";
+                    return;
+                }                
+            }
+            stateMessage = "Substances have the same state";
         }
         catch (ArgumentException ex)
         {

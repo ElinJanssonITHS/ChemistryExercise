@@ -7,8 +7,8 @@ namespace Chemistry.Common_Inheritance.Classes;
 
 public class Chemistry
 {
-    public List<Substance> Substances { get; } = new();
-    public string[] StateNames { get; } = Enum.GetNames(typeof(States));
+    List<Substance> Substances { get; } = new();
+    public string[] StateNames => Enum.GetNames(typeof(States));
     public States GetStateValue(string name) => (States)Enum.Parse(typeof(States), name);
     public Chemistry()
     {
@@ -26,19 +26,22 @@ public class Chemistry
         _ => throw new ArgumentException("State does not exist.", nameof(state))
     };
 
-    public void Add (string substanceName, double mass, string state)
+    public void Add(string name, int mass, string state)
     {
         try
         {
-            Substance substance = CreateSubstance(Substances.Count + 1, substanceName, mass, state);
+            Substance substance = CreateSubstance(Substances.Count + 1, name, mass, state);
             Add(substance);
         }
-        catch { throw; }
-
+        catch
+        {
+            throw;
+        }
     }
     public void Add(Substance substance) => Substances.Add(substance);
-    public List<Substance> GetSubstances() => Substances;
-    public List<Substance> GetSubstances(Func<Substance, bool> expression) => Substances.Where(expression).ToList();
+    public List<Substance> Get() => Substances;
+    public List<Substance> Get(Func<Substance, bool> expression) =>
+        Substances.Where(expression).ToList();
 
 
 }
